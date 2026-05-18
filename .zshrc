@@ -16,10 +16,15 @@ zstyle ':completion:*' menu select
 autoload -U colors && colors
 autoload -Uz vcs_info
 precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '%b '
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats '%b%u%c '
+zstyle ':vcs_info:git:*' actionformats '...'
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' stagedstr '+'
+zstyle ':vcs_info:*:*' check-for-changes true
 setopt PROMPT_SUBST
-PROMPT='%F{cyan}%~%f %F{red}${vcs_info_msg_0_}%f%F{cyan}>%f '
-# PS1="%{$fg[cyan]%}%~%{$reset_color%} %# "
+PROMPT='%F{cyan}%~ %#%f '
+RPROMPT='%F{cyan}${vcs_info_msg_0_}%f'
 
 # --
 # aliases
