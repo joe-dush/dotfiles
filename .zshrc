@@ -12,14 +12,19 @@ compinit
 zstyle ':completion:*' menu select
 
 # ---
-# differentiating between prompt and output
+# prompt
 autoload -U colors && colors
-PS1="%{$fg[cyan]%}%~%{$reset_color%} %# "
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%b '
+setopt PROMPT_SUBST
+PROMPT='%F{cyan}%~%f %F{red}${vcs_info_msg_0_}%f%F{cyan}>%f '
+# PS1="%{$fg[cyan]%}%~%{$reset_color%} %# "
 
 # --
 # aliases
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude .gitkeep'
-alias tree="tree -I '.git|.venv|venv|*.pyc|__pycache__'"
+alias tree='tree -I ".git|.venv|venv|__pycache__"'
 
 alias fzfc='code $(fzf)'
 alias fzfv='vim $(fzf)'
