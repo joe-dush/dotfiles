@@ -49,7 +49,7 @@ set showcmd
 
 
 " syntax highlighting
-" syntax on
+syntax on
 filetype plugin indent on
 
 " misc
