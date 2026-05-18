@@ -1,5 +1,15 @@
 let mapleader =" "
 
+" Create a session per project. Keeps stuff like buffers
+autocmd VimLeave * execute 'mksession! ' . getcwd() . '/.vim-session'
+
+autocmd VimEnter *
+  \ if argc() == 0 && filereadable('.vim-session') |
+  \   source .vim-session |
+  \ endif
+
+
+
 " system clipboard
 nnoremap <leader>y "+y              " Yank motion to clipboard
 vnoremap <leader>y "+y              " Yank selection to clipboard
@@ -28,6 +38,15 @@ set smartindent
 set ignorecase
 set smartcase
 set incsearch
+set showmatch
+
+" go to python definition
+autocmd FileType python setlocal keywordprg=python3\ -m\ pydoc
+nnoremap <leader>def :execute 'vimgrep /def ' . expand('<cword>') . '/ **/*.py'<CR>
+
+" last line
+set showcmd
+
 
 " syntax highlighting
 " syntax on
@@ -35,6 +54,7 @@ filetype plugin indent on
 
 " misc
 set wildmenu
+set novisualbell
 
 " path append ** (to include subdirs in search automatically)
 " git diff (diffopt)
