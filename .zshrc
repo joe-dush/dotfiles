@@ -1,8 +1,15 @@
 setopt vi
 
+# ---
+# work only
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
-. "$HOME/.local/bin/env"
+# allows me to run `aws sso login` without the --profile flag
+# For made tech aws sandbox access via cli
+export AWS_PROFILE=mt-playground
+
+#. "$HOME/.local/bin/env"
 
 
 # ---
@@ -24,7 +31,7 @@ zstyle ':vcs_info:git:*' stagedstr '+'
 zstyle ':vcs_info:*:*' check-for-changes true
 setopt PROMPT_SUBST
 PROMPT='%F{cyan}%~ %#%f '
-RPROMPT='%F{cyan}${vcs_info_msg_0_}%f'
+RPROMPT='%F{242}%D{%H:%M:%S} %F{cyan}${vcs_info_msg_0_}%f'
 
 # --
 # aliases
@@ -33,6 +40,9 @@ alias tree='tree -I ".git|.venv|venv|__pycache__"'
 
 alias fzfc='code $(fzf)'
 alias fzfv='vim $(fzf)'
+
+alias fdiff="uv tool run ruff format && git diff"
+alias ctest="clear && uv run pytest"
 
 alias rack='bash ~/.local/share/Rack2/Rack2_executable/run_rack_using_pwjack.sh'
 
