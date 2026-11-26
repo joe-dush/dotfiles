@@ -1,12 +1,12 @@
 let mapleader =" "
 
 " Create a session per project. Keeps stuff like buffers
-autocmd VimLeave * execute 'mksession! ' . getcwd() . '/.vim-session'
-
-autocmd VimEnter *
-  \ if argc() == 0 && filereadable('.vim-session') |
-  \   source .vim-session |
-  \ endif
+" autocmd VimLeave * execute 'mksession! ' . getcwd() . '/.vim-session'
+" 
+" autocmd VimEnter *
+"   \ if argc() == 0 && filereadable('.vim-session') |
+"   \   source .vim-session |
+"   \ endif
 
 
 
