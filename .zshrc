@@ -38,10 +38,25 @@ RPROMPT='%F{242}%D{%H:%M:%S} %F{cyan}${vcs_info_msg_0_}%f'
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude .gitkeep'
 alias tree='tree -I ".git|.venv|venv|__pycache__"'
 
-alias fzfc='code $(fzf)'
-alias fzfv='vim $(fzf)'
+src() {
+  local rel_dir full_dir
+  rel_dir=$(cd ~/src && find . -mindepth 1 -maxdepth 4 -type d -not -path '*/.*' | sed 's|^\./||' | fzf --height 40% --layout=reverse) && \
+  full_dir="$HOME/src/$rel_dir" && \
+  cd "$full_dir" && code .
+}
 
-alias fdiff="uv tool run ruff format && git diff"
+his() {
+  local selected_command
+  selected_command=$(fc -rl 1 | awk '{$1=""; print $0}' | sed 's/^[ \t]*//' | fzf --tiebreak=index --no-sort --height 40% --reverse)
+  if [[ -n "$selected_command" ]]; then
+    print -z "$selected_command"
+ #    eval "$selected_command"     # Execute immediately
+  fi
+}
+
+alias tab='chrome-tab-activate'
+
+alias fdiff="uv tool run ruff format && uv tool run ruff check --fix; git diff"
 alias ctest="clear && uv run pytest"
 
 alias rack='bash ~/.local/share/Rack2/Rack2_executable/run_rack_using_pwjack.sh'
